@@ -4,6 +4,8 @@ FROM jlesage/baseimage-gui:alpine-3.12-glibc
 ENV VERSION 0.55.0
 ENV ARCHIVE https://github.com/buchen/portfolio/releases/download/${VERSION}/PortfolioPerformance-${VERSION}-linux.gtk.x86_64.tar.gz
 ENV APP_ICON_URL=https://www.portfolio-performance.info/images/logo.png
+ENV DISPLAY_WIDTH=1920
+ENV DISPLAY_HEIGHT=900
 	
 RUN apk --no-cache add ca-certificates wget && update-ca-certificates && \
 	cd /opt && wget ${ARCHIVE} && tar xvzf PortfolioPerformance-${VERSION}-linux.gtk.x86_64.tar.gz && \
@@ -17,7 +19,7 @@ RUN \
 
 RUN \
 	sed -i '1s;^;-configuration\n/opt/portfolio/configuration\n-data\n/opt/portfolio/workspace\n;' /opt/portfolio/PortfolioPerformance.ini && \
-	echo "osgi.nl=de" >> /opt/portfolio/configuration/config.ini && \
+	echo "osgi.nl=en" >> /opt/portfolio/configuration/config.ini && \
 	chmod -R 777 /opt/portfolio && \
     install_app_icon.sh "$APP_ICON_URL"
 
